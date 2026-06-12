@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { GoogleGenAI } from "@google/genai";
-import { zodToJsonSchema } from "zod-to-json-schema";
 
 const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY!});
 
@@ -28,7 +27,7 @@ export async function calculateResult(messages: {type: "Assistant" | "User", mes
         model: "gemini-3.5-flash",
         contents: RESULT_PROMPT.replace(`{{USER_TRANSCRIPT}}`, JSON.stringify(messages)),
         config: {
-            responseFormat: { text: { mimeType: "application/json", schema: zodToJsonSchema(outputSchema) } },
+            responseMimeType: "application/json",
         },
     });
     console.log(response.text!);
