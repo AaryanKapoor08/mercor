@@ -94,9 +94,15 @@ export function Interview() {
             };
 
             socket.onmessage = (message) => {
-                const received = JSON.parse(message.data);
-                const transcript = received.channel?.alternatives[0]?.transcript;
-                if (transcript) {
+                let received;
+                try {
+                    received = JSON.parse(message.data);
+                } catch {
+                    return;
+                }
+                const transcript = received.channel?.alternatives?.[0]?.transcript;
+                // Only persist finalized segments; interim results would save partial sentences.
+                if (transcript && received.is_final) {
                     axios.post(`${BACKEND_URL}/api/v1/session/user/response/${interviewId}`, {
                         message: transcript,
                     });

@@ -35,7 +35,6 @@ export function VoiceOrb({ level, speaking, label, sublabel, icon: Icon, accent 
     const clamped = Math.min(1, Math.max(0, level));
     const scale = 1 + clamped * 0.4;
     const glowSize = 16 + clamped * 90;
-    const Icon_ = Icon;
 
     return (
         <div className="flex flex-col items-center gap-5">
@@ -64,7 +63,7 @@ export function VoiceOrb({ level, speaking, label, sublabel, icon: Icon, accent 
                         boxShadow: `0 0 ${glowSize}px rgba(${a.glow}, ${0.35 + clamped * 0.5})`,
                     }}
                 >
-                    <Icon_ className="size-10" strokeWidth={1.75} />
+                    <Icon className="size-10" strokeWidth={1.75} />
                 </div>
             </div>
 
